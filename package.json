@@ -1,0 +1,44 @@
+{
+  "name": "daniel_onabiyi",
+  "version": "1.0.0",
+  "description": "backend for api",
+  "main": "no",
+  "scripts": {
+    "start": "babel-node index.js",
+    "build": "babel src --out-dir build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danizzy/backend-lendsqr.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/danizzy/backend-lendsqr/issues"
+  },
+  "homepage": "",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.2",
+    "ethers": "^5.7.0",
+    "express": "^4.18.1",
+    "express-validator": "^6.14.2",
+    "helmet": "^6.0.0",
+    "hpp": "^0.2.3",
+    "method-override": "^3.0.0",
+    "mongoose": "^6.5.2",
+    "moralis": "^2.0.3",
+    "moralis-v1": "^1.11.0",
+    "nodemon": "^2.0.19",
+    "xss-clean": "^0.1.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.18.10",
+    "@babel/core": "^7.19.0",
+    "@babel/node": "^7.18.10",
+    "@babel/plugin-proposal-decorators": "^7.19.0",
+    "@babel/plugin-transform-runtime": "^7.18.10",
+    "@babel/preset-env": "^7.19.0",
+    "@babel/register": "^7.18.9"
+  }
+}

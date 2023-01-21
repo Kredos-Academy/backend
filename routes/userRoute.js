@@ -1,6 +1,6 @@
 import Router from "../libraries/router";
 import collectioncon from "../nft/collectioncon";
 
-Router.get("/getAllUserPurchase",[],"userController@createUser");
+Router.get("/register",[],"userController@createUser");
 
 export default Router.export();

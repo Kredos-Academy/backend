@@ -8,14 +8,19 @@ export default class userController extends Controller {
    * POST / getAllUserUser
    * @dev API method to get all users ..
    */
-   async createUser (req, res, next) {
+   async register (req, res, next) {
     try{
-        let user = await User.findOne({ wallet_address: req.body.wallet_address });
+        let user = await User.findOne({ email_address: req.body.email_address });
         if (user) {
             return res.status(400).send('That user already exists!');
         } else {
              // Insert the new user if they do not exist yet
-            user = new User({wallet_address: req.body.wallet_address});
+            user = new User({
+              email_address: req.body.email_address,
+              password: req.body.password,
+              name: req.body.name,
+              role: req.body.role
+            });
             await user.save();
             res.send(user);
         }

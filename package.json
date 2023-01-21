@@ -1,7 +1,7 @@
 {
   "name": "daniel_onabiyi",
   "version": "1.0.0",
-  "description": "backend for api",
+  "description": "backend for LMS",
   "main": "no",
   "scripts": {
     "start": "babel-node index.js",
@@ -9,12 +9,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/danizzy/backend-lendsqr.git"
+    "url": "git+https://github.com/Kredos-Academy/backend.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/danizzy/backend-lendsqr/issues"
+    "url": "https://github.com/Kredos-Academy/backend/issues"
   },
   "homepage": "",
   "dependencies": {

@@ -7,3 +7,7 @@ const courseSchema = new mongoose.Schema({
     students: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Student' }]
 });
 module.exports = mongoose.model('course', courseSchema);
+
+//write a payment controller for an edutech?
+
+

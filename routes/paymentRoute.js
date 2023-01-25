@@ -1,6 +1,6 @@
 import Router from "../libraries/router";
 // import collectioncon from "../nft/collectioncon";
 
-Router.post("/register",[],"userController@register");
+Router.post("/applicationfee",[],"paymentController@makePayment");
 
 export default Router.export();

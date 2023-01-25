@@ -1,1 +1,2 @@
-export { default as InteractController } from "./userController";
+export { default as userController } from "./userController";
+export { default as paymentController } from "./paymentController";

@@ -29,7 +29,7 @@
     "mongoose": "^6.5.2",
     "moralis": "^2.0.3",
     "moralis-v1": "^1.11.0",
-    "nodemon": "^2.0.19",
+    "paystack": "^2.0.1",
     "xss-clean": "^0.1.1"
   },
   "devDependencies": {
@@ -39,6 +39,7 @@
     "@babel/plugin-proposal-decorators": "^7.19.0",
     "@babel/plugin-transform-runtime": "^7.18.10",
     "@babel/preset-env": "^7.19.0",
-    "@babel/register": "^7.18.9"
+    "@babel/register": "^7.18.9",
+    "nodemon": "^2.0.20"
   }
 }

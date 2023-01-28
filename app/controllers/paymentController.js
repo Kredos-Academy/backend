@@ -5,8 +5,8 @@ const Payment = require('../models/payment');
 const Paystack = require('paystack')('sk_test_9ec05adfaa38f953e4c5e8e878f6f1901ee55dd2');
 
 
-export default class userController extends Controller{
-    async makePayment(req, res) {
+export default class paymentController extends Controller{
+    async applicationPayment(req, res) {
         try{
             // const student = await Student.findOne({ email: req.body.email});
     
@@ -16,33 +16,75 @@ export default class userController extends Controller{
             await Paystack.transaction.initialize({
                 email: req.body.email,
                 amount: 750000, // in kobo
-                reference: ''+Math.floor((Math.random() * 1000000000) + 1),
              }).then(function(body){
             // send the authorization_url in the response to the client to redirect them to
             // the payment page where they can make the payment
-                res.redirect(body.data.authorization_url);
+                res.send(body.data.authorization_url);
              });
         } catch (error) {return res.status(422).json({ error });}
     } 
     
     async coursePayment(req, res) {
         try{
-            // const student = await Student.findOne({ email: req.body.email});
+            const student = await Student.findOne({ email: req.body.email});
     
-            // if (!student) {return res.status(404).send('Student not found');}
+            if (!student) {return res.status(404).send('Student not found');}
     
         // Create a paystack charge
-            await Paystack.transaction.initialize({
+            const coursefee = await Paystack.transaction.initialize({
                 email: req.body.email,
                 amount: 3375000, // in kobo
-                reference: ''+Math.floor((Math.random() * 1000000000) + 1),
              }).then(function(body){
             // send the authorization_url in the response to the client to redirect them to
             // the payment page where they can make the payment
-                res.redirect(body.data.authorization_url);
+                res.send(body.data.authorization_url);
              });
+
+             const payment = new Payment({
+                student: student.email,
+                amount,
+              });
+              await payment.save();
+          
+              // Update the student's payment status
+              student.Paid = true;
+              await student.save();
         } catch (error) {return res.status(422).json({ error });}
     } 
+
+    async paymentCallback(req, res) {
+        try{
+             //  Create a new payment record in the database
+            const payment = await Paystack.transaction.verify(req.query.reference);
+
+             // Check if the payment was successful
+            if (payment.data.status === 'success') {
+               // Redirect the user to the registration page
+                res.redirect('http://localhost:4000/register');
+            } else {
+               res.send('Payment failed');
+            }
+        } catch (error) {return res.status(422).json({ error });}
+    }
+
+    async createPayment(req, res) {
+        try{
+             //  Create a new payment record in the database
+            const payment = new Payment({
+                student: student.email,
+                amount,
+                reference: coursefee.reference
+            });
+            await payment.save();
+
+            // Update the student's payment status
+            student.paid = true;
+            await student.save();
+
+            res.send('Payment successful');
+        } catch (error) {return res.status(422).json({ error });}
+
+    }
 }   
 // const paymentController = {
 //   async makePayment(req, res) {
@@ -65,17 +107,17 @@ export default class userController extends Controller{
 //         res.redirect(body.data.authorization_url);
 //       });
 
-// //     Create a new payment record in the database
-// //     const payment = new Payment({
-// //       student: student._id,
-// //       amount,
-// //       transactionId: charge.id
-// //     });
-// //     await payment.save();
+    // Create a new payment record in the database
+    // const payment = new Payment({
+    //   student: student._id,
+    //   amount,
+    //   transactionId: charge.id
+    // });
+    // await payment.save();
 
-// //     // Update the student's payment status
-// //     student.isPaid = true;
-// //     await student.save();
+    // // Update the student's payment status
+    // student.isPaid = true;
+    // await student.save();
 
 // //     res.send('Payment successful');
 // //   },

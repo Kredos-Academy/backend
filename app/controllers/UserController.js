@@ -8,6 +8,7 @@ const Paystack = require('paystack')('sk_test_9ec05adfaa38f953e4c5e8e878f6f1901e
 // const paymentInstance = new paymentService();
 
 import { HTTP_ACCEPTED, HTTP_CREATED } from "../../constants/HttpCode";
+import { body } from "express-validator";
 
 
 export default class userController extends Controller {
@@ -26,18 +27,18 @@ export default class userController extends Controller {
               email: req.body.email,
               password: req.body.password,
               name: req.body.name,
-            });
-            const application_fee = await Paystack.transaction.initialize({
-              email: 'req.body.email',
-              amount: 750000 // in kobo
-            }).then(function(body){
-              // send the authorization_url in the response to the client to redirect them to
-              // the payment page where they can make the payment
-              res.redirect(body.data.authorization_url);
-            });
-            await student.save();
-            await application_fee.wait();
+            })
+            // const application_fee = await Paystack.transaction.initialize({
+            //   email: 'req.body.email',
+            //   amount: 750000 // in kobo
+            // }).then(function(body){
+            //   // send the authorization_url in the response to the client to redirect them to
+            //   // the payment page where they can make the payment
+            //   res.redirect(body.data.authorization_url);
+            // });
+            await student.save()
             res.send(student);
+            
         }
     } catch (error) {return res.status(422).json({ error });}
   }

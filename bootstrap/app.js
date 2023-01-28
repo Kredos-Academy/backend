@@ -24,6 +24,11 @@ class App {
         this.app.use(express.urlencoded({extended:true}));
         this.app.use(cors());
         this.app.use(methodOverride("_method"));
+        this.app.use(function(req, res, next) {
+            res.header('Access-Control-Allow-Origin', '*');
+            res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+            next();
+          });
     }
 
     database() {

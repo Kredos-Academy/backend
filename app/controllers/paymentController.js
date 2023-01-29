@@ -31,24 +31,25 @@ export default class paymentController extends Controller{
             if (!student) {return res.status(404).send('Student not found');}
     
         // Create a paystack charge
-            const coursefee = await Paystack.transaction.initialize({
+            await Paystack.transaction.initialize({
                 email: req.body.email,
-                amount: 3375000, // in kobo
+                amount: 3375000,
+                plan: "PLN_4zpxti8kowo9hue" // in kobo
              }).then(function(body){
             // send the authorization_url in the response to the client to redirect them to
             // the payment page where they can make the payment
                 res.send(body.data.authorization_url);
              });
 
-             const payment = new Payment({
-                student: student.email,
-                amount,
-              });
-              await payment.save();
+            // const payment = new Payment({
+            //     student: student.email,
+            //     amount,
+            //   });
+            // await payment.save();
           
-              // Update the student's payment status
-              student.Paid = true;
-              await student.save();
+            //   // Update the student's payment status
+            // student.Paid = true;
+            // await student.save();
         } catch (error) {return res.status(422).json({ error });}
     } 
 
@@ -60,7 +61,7 @@ export default class paymentController extends Controller{
              // Check if the payment was successful
             if (payment.data.status === 'success') {
                // Redirect the user to the registration page
-                res.redirect('http://localhost:4000/register');
+                res.redirect('https://www.kredosacademy.com/Application');
             } else {
                res.send('Payment failed');
             }

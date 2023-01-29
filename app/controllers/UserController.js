@@ -28,18 +28,21 @@ export default class userController extends Controller {
               password: req.body.password,
               name: req.body.name,
             })
-            // const application_fee = await Paystack.transaction.initialize({
-            //   email: 'req.body.email',
-            //   amount: 750000 // in kobo
-            // }).then(function(body){
-            //   // send the authorization_url in the response to the client to redirect them to
-            //   // the payment page where they can make the payment
-            //   res.redirect(body.data.authorization_url);
-            // });
-            await student.save()
-            res.send(student);
+            student.save();
+          }
+            // res.redirect('http://localhost:4000/applicationPayment')
+        await Paystack.transaction.initialize({
+          email: student.email,
+          amount: 750000 // in kobo
+        }).then(function(body){
+              // send the authorization_url in the response to the client to redirect them to
+              // the payment page where they can make the payment
+          res.send(body.data.authorization_url);
+        });
+            // await student.save()
+            // res.send(student);
             
-        }
+        
     } catch (error) {return res.status(422).json({ error });}
   }
     

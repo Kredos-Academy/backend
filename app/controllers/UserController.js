@@ -26,7 +26,7 @@ export default class userController extends Controller {
             student = new Student({
               email: req.body.email,
               password: req.body.password,
-              name: req.body.name,
+              name: req.body.name
             })
             student.save();
           }
@@ -41,9 +41,26 @@ export default class userController extends Controller {
         });
             // await student.save()
             // res.send(student);
-            
-        
     } catch (error) {return res.status(422).json({ error });}
   }
+
+  async login (req, res, next)  {
+    try {
+      const user = await User.findByCredentials(req.body.email, req.body.password)
+      const token = await user.generateAuthToken()
+      res.send({ user, token })
+    } catch (error) {return res.status(422).json({error});}
+  }
+
+  async logout (req, res, next) {
+    req.logout();
+    req.session.destroy();
+    res.status(200).send({
+      message: "Logout successful"
+    });
+  }
+
+
+  
     
 }

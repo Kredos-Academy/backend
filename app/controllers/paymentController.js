@@ -1,4 +1,5 @@
 import Controller from "../../libraries/controller/index";
+import student from "../models/student";
 const Student = require('../models/student');
 const Payment = require('../models/payment');
 // // const stripe = require('stripe')('YOUR_STRIPE_SECRET_KEY');
@@ -59,9 +60,10 @@ export default class paymentController extends Controller{
             const payment = await Paystack.transaction.verify(req.query.reference);
 
              // Check if the payment was successful
-            if (payment.data.status === 'success') {
+            if (payment.data.status === 'success') { 
+                
                // Redirect the user to the registration page
-                res.redirect('https://www.kredosacademy.com/Application');
+                res.redirect('https://www.kredosacademy.com/lms');
             } else {
                res.send('Payment failed');
             }

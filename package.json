@@ -18,6 +18,7 @@
   },
   "homepage": "",
   "dependencies": {
+    "bcrypt": "^5.1.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.2",
     "ethers": "^5.7.0",
@@ -29,6 +30,7 @@
     "mongoose": "^6.5.2",
     "moralis": "^2.0.3",
     "moralis-v1": "^1.11.0",
+    "passport": "^0.6.0",
     "paystack": "^2.0.1",
     "xss-clean": "^0.1.1"
   },

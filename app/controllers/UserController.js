@@ -1,6 +1,6 @@
 import Controller from "../../libraries/controller/index";
 import Student from '../models/student';
-
+const bcrypt = require("bcrypt");
 const Paystack = require('paystack')('sk_test_9ec05adfaa38f953e4c5e8e878f6f1901ee55dd2');
 
 // const paymentService = require('../services/payment.service');
@@ -9,6 +9,7 @@ const Paystack = require('paystack')('sk_test_9ec05adfaa38f953e4c5e8e878f6f1901e
 
 import { HTTP_ACCEPTED, HTTP_CREATED } from "../../constants/HttpCode";
 import { body } from "express-validator";
+import student from "../models/student";
 
 
 export default class userController extends Controller {
@@ -26,7 +27,7 @@ export default class userController extends Controller {
             student = new Student({
               email: req.body.email,
               password: req.body.password,
-              name: req.body.name
+              name: req.body.name,
             })
             student.save();
           }
@@ -42,25 +43,22 @@ export default class userController extends Controller {
             // await student.save()
             // res.send(student);
     } catch (error) {return res.status(422).json({ error });}
+  }  
+
+  async login (req, res, next) {
+    try{
+        const student = await Student.findOne({email: req.body.email});
+        if (!student) {
+          return  res.status(400).send('That user does not exists!');
+        }
+        else{
+          const isMatch = await student.matchPassword(req.body.password);
+          if (!isMatch) {
+            res.status(400).send('That password does not match!');
+          }
+          return (student)
+        }
+    } catch (error) {return res.status(422).json({ error });}
   }
-
-  async login (req, res, next)  {
-    try {
-      const user = await User.findByCredentials(req.body.email, req.body.password)
-      const token = await user.generateAuthToken()
-      res.send({ user, token })
-    } catch (error) {return res.status(422).json({error});}
-  }
-
-  async logout (req, res, next) {
-    req.logout();
-    req.session.destroy();
-    res.status(200).send({
-      message: "Logout successful"
-    });
-  }
-
-
-  
     
 }
